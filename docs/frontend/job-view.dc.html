@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Job view</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{text-decoration:none}
+summary{list-style:none;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+details[open] > summary .chev{transform:rotate(180deg)}
+summary:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:12px}
+</style>
+</helmet>
+<div style="--accent: {{accent}}; --tint: color-mix(in srgb, var(--accent) 9%, white); --ink:#14142B; --muted:#62667D; --line:#E6E8F3; --bg:#F5F6FC; min-height: 2500px; display:flex; flex-direction:column; background:var(--bg); color:var(--ink); font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size:15px; line-height:1.5">
+
+<header style="position:sticky; top:0; z-index:5; height:64px; box-sizing:border-box; padding:0 32px; display:flex; align-items:center; gap:12px; background:#fff; border-bottom:1px solid var(--line)">
+<svg width="30" height="30" viewBox="0 0 30 30" role="img" aria-label="CV Matcher logo"><rect width="30" height="30" rx="9" style="fill:var(--accent)"/><circle cx="12" cy="15" r="5.5" fill="#fff"/><circle cx="19" cy="15" r="5.5" fill="#2EE6A8" fill-opacity="0.92"/></svg>
+<span style="font-weight:800; font-size:18px; letter-spacing:-0.01em">CV Matcher</span>
+<span style="flex:1 1 auto"></span>
+<span style="color:var(--muted); font-size:13px">10 candidates · 3 job descriptions</span>
+</header>
+
+<div style="flex:1 1 auto; display:flex; flex-wrap:wrap; align-items:flex-start; gap:32px; padding:32px; box-sizing:border-box">
+
+<nav aria-label="Browse" style="flex:1 1 260px; max-width:300px; display:flex; flex-direction:column; gap:28px">
+<div style="display:flex; flex-direction:column; gap:6px">
+<h2 style="margin:0 0 4px 12px; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)">Job descriptions</h2>
+<sc-for list="{{jobs}}" as="n" hint-placeholder-count="3">
+<a href="{{n.href}}" style="{{n.rowStyle}}"><span style="font-weight:600; font-size:14px">{{n.label}}</span><span style="{{n.fileStyle}}">{{n.file}}</span></a>
+</sc-for>
+</div>
+<div style="display:flex; flex-direction:column; gap:6px">
+<h2 style="margin:0 0 4px 12px; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)">Candidates</h2>
+<sc-for list="{{people}}" as="n" hint-placeholder-count="10">
+<a href="{{n.href}}" style="{{n.rowStyle}}"><span style="font-weight:600; font-size:14px">{{n.label}}</span><span style="{{n.fileStyle}}">{{n.file}}</span></a>
+</sc-for>
+</div>
+</nav>
+
+<main style="flex:999 1 560px; min-width:0; display:flex; flex-direction:column; gap:20px; max-width:1000px">
+
+<div style="display:flex; flex-direction:column; gap:2px">
+<h1 style="margin:0; font-size:30px; line-height:1.2; letter-spacing:-0.02em">Healthcare Data Analyst</h1>
+<span style="font-size:13px; color:var(--muted)">29243</span>
+<span style="color:var(--muted); margin-top:6px">All 10 candidates, best match first.</span>
+</div>
+
+<details open style="background:#fff; border:1px solid var(--line); border-radius:16px">
+<summary style="display:flex; align-items:center; justify-content:space-between; padding:14px 20px; font-weight:700; border-radius:16px">
+<span>Job description text</span>
+<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#62667D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+</summary>
+<div style="max-height:230px; overflow:auto; padding:2px 20px 18px; white-space:pre-wrap; font-size:14px; color:#33364D; border-top:1px solid var(--line); padding-top:14px">Healthcare Data Analyst
+Leeds, United Kingdom
+
+We are looking for a Healthcare Data Analyst to turn patient and operational data into reports that clinical managers use every week.
+
+Responsibilities
+- Build and maintain dashboards for admissions, waiting times and readmissions.
+- Clean and link records from several clinical systems.
+- Explain findings to non-technical colleagues.
+
+Requirements
+- Three or more years of analysis work, ideally in a health setting.
+- Strong SQL. Python or R is a plus.
+- A degree in statistics, mathematics, health informatics or a related field.</div>
+</details>
+
+<div style="display:flex; flex-direction:column; gap:12px">
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="10">
+<details open="{{c.open}}" style="background:#fff; border:1px solid var(--line); border-radius:16px">
+<summary style="display:flex; align-items:center; flex-wrap:wrap; gap:14px 18px; padding:16px 20px; border-radius:16px">
+<span style="{{c.rankStyle}}">{{c.rank}}</span>
+<span style="flex:1 1 200px; min-width:0"><span style="display:block; font-weight:700; font-size:16px">{{c.name}}</span><span style="display:block; font-size:12px; color:var(--muted)">{{c.file}}</span></span>
+<span style="display:flex; align-items:center; gap:10px; width:190px"><span style="flex:1 1 auto; height:8px; border-radius:4px; background:#ECEDF7; overflow:hidden"><span style="{{c.barStyle}}"></span></span><span style="font-weight:700; font-variant-numeric:tabular-nums; width:40px; text-align:right">{{c.score}}</span></span>
+<span style="{{c.verdictStyle}}">
+<sc-if value="{{c.yes}}" hint-placeholder-val="{{true}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></sc-if>
+<sc-if value="{{c.no}}" hint-placeholder-val="{{false}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></sc-if>
+{{c.verdict}}</span>
+<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#62667D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+</summary>
+<div style="display:flex; flex-direction:column; gap:20px; padding:18px 20px 22px; border-top:1px solid var(--line)">
+<p style="margin:0; padding:12px 14px; background:var(--tint); border-radius:12px; font-size:14px"><strong>Recommendation.</strong> {{c.reason}}</p>
+<div style="display:flex; flex-direction:column; gap:10px">
+<h3 style="margin:0; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)">Extracted</h3>
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px 24px">
+<sc-for list="{{c.extracted}}" as="a" hint-placeholder-count="5">
+<div style="{{a.cellStyle}}"><div style="font-size:12px; color:var(--muted)">{{a.label}}</div><div style="{{a.valStyle}}; font-size:14px">{{a.value}}</div></div>
+</sc-for>
+</div>
+<div style="display:flex; flex-wrap:wrap; gap:6px">
+<sc-for list="{{c.skills}}" as="s" hint-placeholder-count="5">
+<span style="padding:3px 10px; border-radius:999px; background:var(--tint); color:var(--accent); font-size:13px; font-weight:600">{{s}}</span>
+</sc-for>
+</div>
+</div>
+<div style="display:flex; flex-direction:column; gap:10px">
+<h3 style="margin:0; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)">Calculated</h3>
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:14px 24px">
+<sc-for list="{{c.calc}}" as="a" hint-placeholder-count="6">
+<div><div style="font-size:12px; color:var(--muted)">{{a.label}}</div><div style="{{a.valStyle}}; font-size:14px">{{a.value}}</div></div>
+</sc-for>
+</div>
+</div>
+</div>
+</details>
+</sc-for>
+</div>
+
+</main>
+</div>
+
+<footer style="padding:20px 32px 28px; font-size:12px; color:var(--muted); border-top:1px solid var(--line); background:#fff">Data: TalentCLEF 2026 Task A, English development set (synthetic records), CC BY 4.0. Everything shown stays on this machine except the text sent to the LLM service.</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#4338FF","options":["#4338FF","#0A8F6A","#E0457B"]},"$preview":{"width":1440,"height":2500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#4338FF';
+    const NA = 'Not available';
+
+    const navRow = (selected) => selected
+      ? 'display:flex; flex-direction:column; padding:9px 12px; border-radius:12px; background:var(--accent); color:#fff'
+      : 'display:flex; flex-direction:column; padding:9px 12px; border-radius:12px; color:var(--ink)';
+    const navFile = (selected) => selected
+      ? 'font-size:12px; color:rgba(255,255,255,0.82)'
+      : 'font-size:12px; color:var(--muted)';
+
+    const jobs = [
+      ['Healthcare Data Analyst', '29243', true],
+      ['Senior Mechanical/HVAC Engineer', '32447', false],
+      ['Retail Mortgage Loan Closer', '38671', false]
+    ].map(([label, file, sel]) => ({ label, file, href: 'job-view.dc.html', rowStyle: navRow(sel), fileStyle: navFile(sel) }));
+
+    const names = [
+      ['Maya Okafor', '11695'], ['Priya Natarajan', '15087'], ['Daniel Reyes', '17635'],
+      ['Tom Brandt', '22710'], ['Lena Fischer', '10004'], ['Samir Haddad', '13882'],
+      ['Chloe Martin', '15639'], ['Owen Walsh', '367'], ['Ana Souza', '8553'], ['Jin Park', '8568']
+    ];
+    const people = names.map(([label, file]) => ({ label, file, href: 'candidate-view.dc.html', rowStyle: navRow(false), fileStyle: navFile(false) }));
+
+    const cell = (label, value, wide) => ({
+      label,
+      value: value == null ? NA : value,
+      cellStyle: wide ? 'grid-column: 1 / -1' : '',
+      valStyle: value == null ? 'color:#62667D; font-style:italic' : 'font-weight:600'
+    });
+
+    // [name, file, score, interview, reason, title, location, degree, skills, lastJob, countries, companies, calc[6]]
+    const rows = [
+      ['Maya Okafor', '11695', 0.84, true, 'Four years of hospital and clinic reporting with SQL pipelines and dashboards matches the role closely.', 'Senior Data Analyst', 'Leeds, United Kingdom', 'BSc Statistics', ['SQL', 'Python', 'Tableau', 'Excel', 'Data quality', 'Healthcare reporting'], 'Northfield Health Trust · Leeds, United Kingdom · Jan 2022 to Present (58 months) · Senior Data Analyst. Built admissions and readmission dashboards for 12 wards.', 'United Kingdom', 'Northfield Health Trust, Calder Clinics, Brightwell Pharmacy Group', ['106 months', '3', '35.3 months', 'None (0 months)', 'Yes', '102 months']],
+      ['Priya Natarajan', '15087', 0.81, true, 'Clinical analytics background and strong SQL. Shorter time in health than the top match.', 'Clinical Data Analyst', 'Bristol, United Kingdom', 'MSc Health Informatics', ['SQL', 'R', 'Power BI', 'Clinical coding', 'Statistics'], 'Avon Community Care · Bristol, United Kingdom · Mar 2021 to Present (68 months) · Clinical Data Analyst. Reports waiting times for community clinics.', 'United Kingdom, India', 'Avon Community Care, Vidya Health Labs', ['92 months', '2', '46.0 months', 'None (0 months)', 'Yes', '74 months']],
+      ['Daniel Reyes', '17635', 0.79, true, 'Public-health analysis with Python and dashboards. Limited exposure to clinical systems.', 'Public Health Analyst', 'Manchester, United Kingdom', 'MPH Public Health', ['Python', 'SQL', 'Qlik', 'Epidemiology'], 'City Health Board · Manchester, United Kingdom · Sep 2020 to Present (74 months) · Public Health Analyst.', 'United Kingdom, Spain', 'City Health Board, Madrid Salud', ['96 months', '2', '48.0 months', 'None (0 months)', 'Yes', '60 months']],
+      ['Tom Brandt', '22710', 0.76, true, 'Hospital finance reporting with a health focus. Worth a short screening call.', 'Reporting Analyst', 'Leeds, United Kingdom', 'BA Economics', ['Excel', 'SQL', 'Reporting'], 'St Mary Hospital Group · Leeds, United Kingdom · Feb 2019 to Present (92 months) · Reporting Analyst.', 'United Kingdom', 'St Mary Hospital Group', ['92 months', '1', '92.0 months', 'None (0 months)', 'Yes', '96 months']],
+      ['Lena Fischer', '10004', 0.58, false, 'Strong analyst, but the experience is in logistics, not health data.', 'Supply Chain Analyst', 'Hamburg, Germany', 'BSc Business Informatics', ['SQL', 'SAP', 'Excel'], 'NordFreight GmbH · Hamburg, Germany · Jan 2021 to Present (70 months) · Supply Chain Analyst.', 'Germany', 'NordFreight GmbH, Elbe Logistics', ['102 months', '3', '34.0 months', 'None (0 months)', 'Yes', '108 months']],
+      ['Samir Haddad', '13882', 0.52, false, 'Mechanical engineering profile. Little overlap with the role.', 'Mechanical Engineer', 'Dubai, United Arab Emirates', 'BEng Mechanical Engineering', ['HVAC', 'AutoCAD', 'Project management'], 'Gulf Climate Systems · Dubai, United Arab Emirates · May 2017 to Present (113 months) · Mechanical Engineer.', 'United Arab Emirates, Egypt', 'Gulf Climate Systems, Nile Energy', ['150 months', '2', '75.0 months', 'None (0 months)', 'Yes', '132 months']],
+      ['Chloe Martin', '15639', 0.49, false, 'Mortgage operations experience; no data analysis focus.', 'Loan Closer', 'Austin, United States', 'BBA Finance', ['Mortgage closing', 'Compliance', 'Excel'], 'Lone Star Lending · Austin, United States · Jun 2020 to Present (77 months) · Loan Closer.', 'United States', 'Lone Star Lending', ['77 months', '1', '77.0 months', 'None (0 months)', 'Yes', '84 months']],
+      ['Owen Walsh', '367', 0.47, false, 'Retail banking background. Not matched on skills or domain.', 'Branch Officer', 'Dublin, Ireland', 'BA Business', ['Customer service', 'Lending'], 'Harbour Savings · Dublin, Ireland · Oct 2019 to Present (85 months) · Branch Officer.', 'Ireland', 'Harbour Savings', ['85 months', '1', '85.0 months', 'None (0 months)', 'Yes', '90 months']],
+      ['Ana Souza', '8553', 0.44, false, 'HVAC project work; no analysis experience listed.', 'HVAC Project Engineer', 'Lisbon, Portugal', 'MEng Mechanical Engineering', ['HVAC', 'Design', 'Site supervision'], 'Atlantic Cooling · Lisbon, Portugal · Apr 2018 to Present (103 months) · HVAC Project Engineer.', 'Portugal', 'Atlantic Cooling', ['103 months', '1', '103.0 months', 'None (0 months)', 'Yes', '110 months']],
+      ['Jin Park', '8568', 0.41, false, 'Closing and compliance specialist. Different field.', 'Mortgage Closer', 'Seattle, United States', 'BA Accounting', ['Closing', 'Compliance'], 'Cascade Home Loans · Seattle, United States · Jan 2022 to Present (58 months) · Mortgage Closer.', 'United States', 'Cascade Home Loans', ['58 months', '1', '58.0 months', 'None (0 months)', 'Yes', '48 months']]
+    ];
+
+    const calcLabels = ['Total employment', 'Jobs held', 'Average per job', 'Employment gaps', 'Employed now', 'Since graduation'];
+
+    const cards = rows.map((r, i) => {
+      const [name, file, score, yes, reason, title, loc, degree, skills, last, countries, companies, calc] = r;
+      return {
+        open: i < 2,
+        rank: String(i + 1),
+        rankStyle: 'flex:none; width:36px; height:36px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:800; ' + (i === 0 ? 'background:var(--accent); color:#fff' : 'background:var(--tint); color:var(--accent)'),
+        name, file,
+        score: score.toFixed(2),
+        barStyle: 'display:block; height:100%; border-radius:4px; background:var(--accent); width:' + Math.round(score * 100) + '%',
+        yes, no: !yes,
+        verdict: yes ? 'Interview' : 'Do not interview',
+        verdictStyle: 'display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; font-size:13px; font-weight:700; white-space:nowrap; ' + (yes ? 'background:#D8F7EA; color:#07553D' : 'background:#FFE4DE; color:#9B2A1B'),
+        reason,
+        skills,
+        extracted: [
+          cell('Current title', title),
+          cell('Location', loc),
+          cell('Highest degree', degree),
+          cell('Countries worked', countries),
+          cell('Last job', last, true),
+          cell('Companies', companies, true)
+        ],
+        calc: calc.map((v, k) => cell(calcLabels[k], v))
+      };
+    });
+
+    return { accent, jobs, people, cards };
+  }
+}
+</script>
+</body>
+</html>

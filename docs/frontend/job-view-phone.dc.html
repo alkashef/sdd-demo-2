@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Job view on a phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+summary{list-style:none;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+details[open] > summary .chev{transform:rotate(180deg)}
+summary:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:12px}
+</style>
+</helmet>
+<div style="--accent: {{accent}}; --tint: color-mix(in srgb, var(--accent) 9%, white); --ink:#14142B; --muted:#62667D; --line:#E6E8F3; --bg:#F5F6FC; min-height: 2600px; display:flex; flex-direction:column; background:var(--bg); color:var(--ink); font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size:15px; line-height:1.5">
+
+<header style="position:sticky; top:0; z-index:5; height:56px; box-sizing:border-box; padding:0 16px; display:flex; align-items:center; gap:10px; background:#fff; border-bottom:1px solid var(--line)">
+<svg width="28" height="28" viewBox="0 0 30 30" role="img" aria-label="CV Matcher logo"><rect width="30" height="30" rx="9" style="fill:var(--accent)"/><circle cx="12" cy="15" r="5.5" fill="#fff"/><circle cx="19" cy="15" r="5.5" fill="#2EE6A8" fill-opacity="0.92"/></svg>
+<span style="font-weight:800; font-size:17px; letter-spacing:-0.01em">CV Matcher</span>
+</header>
+
+<div style="padding:16px; display:flex; flex-direction:column; gap:16px">
+
+<nav aria-label="Browse" style="display:flex; flex-direction:column; gap:12px">
+<label style="display:flex; flex-direction:column; gap:4px; font-size:12px; font-weight:700; color:var(--muted); letter-spacing:0.04em; text-transform:uppercase">Job description
+<select style="height:48px; padding:0 12px; border:1px solid var(--line); border-radius:12px; background:#fff; color:var(--ink); font:inherit; font-size:15px; font-weight:600; letter-spacing:0; text-transform:none">
+<option selected>Healthcare Data Analyst (29243)</option>
+<option>Senior Mechanical/HVAC Engineer (32447)</option>
+<option>Retail Mortgage Loan Closer (38671)</option>
+</select>
+</label>
+<label style="display:flex; flex-direction:column; gap:4px; font-size:12px; font-weight:700; color:var(--muted); letter-spacing:0.04em; text-transform:uppercase">Candidate
+<select style="height:48px; padding:0 12px; border:1px solid var(--line); border-radius:12px; background:#fff; color:var(--muted); font:inherit; font-size:15px; letter-spacing:0; text-transform:none">
+<option selected>Choose a candidate</option>
+<option>Maya Okafor (11695)</option>
+<option>Priya Natarajan (15087)</option>
+</select>
+</label>
+</nav>
+
+<main style="display:flex; flex-direction:column; gap:14px; min-width:0">
+
+<div style="display:flex; flex-direction:column; gap:2px">
+<h1 style="margin:0; font-size:24px; line-height:1.2; letter-spacing:-0.02em">Healthcare Data Analyst</h1>
+<span style="font-size:13px; color:var(--muted)">29243</span>
+<span style="color:var(--muted); margin-top:4px; font-size:14px">All 10 candidates, best match first.</span>
+</div>
+
+<details style="background:#fff; border:1px solid var(--line); border-radius:16px">
+<summary style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; font-weight:700; border-radius:16px; min-height:44px; box-sizing:border-box">
+<span>Job description text</span>
+<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#62667D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+</summary>
+<div style="max-height:200px; overflow:auto; padding:14px 16px 16px; white-space:pre-wrap; font-size:14px; color:#33364D; border-top:1px solid var(--line)">Healthcare Data Analyst
+Leeds, United Kingdom
+
+We are looking for a Healthcare Data Analyst to turn patient and operational data into reports that clinical managers use every week.</div>
+</details>
+
+<div style="display:flex; flex-direction:column; gap:10px">
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="10">
+<details open="{{c.open}}" style="background:#fff; border:1px solid var(--line); border-radius:16px">
+<summary style="display:flex; flex-direction:column; gap:10px; padding:14px 16px; border-radius:16px">
+<span style="display:flex; align-items:center; gap:12px">
+<span style="{{c.rankStyle}}">{{c.rank}}</span>
+<span style="flex:1 1 auto; min-width:0"><span style="display:block; font-weight:700; font-size:16px">{{c.name}}</span><span style="display:block; font-size:12px; color:var(--muted)">{{c.file}}</span></span>
+<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#62667D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+</span>
+<span style="display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px">
+<span style="display:flex; align-items:center; gap:10px; flex:1 1 140px"><span style="flex:1 1 auto; height:8px; border-radius:4px; background:#ECEDF7; overflow:hidden"><span style="{{c.barStyle}}"></span></span><span style="font-weight:700; font-variant-numeric:tabular-nums">{{c.score}}</span></span>
+<span style="{{c.verdictStyle}}">
+<sc-if value="{{c.yes}}" hint-placeholder-val="{{true}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></sc-if>
+<sc-if value="{{c.no}}" hint-placeholder-val="{{false}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></sc-if>
+{{c.verdict}}</span>
+</span>
+</summary>
+<div style="display:flex; flex-direction:column; gap:16px; padding:16px; border-top:1px solid var(--line)">
+<p style="margin:0; padding:12px 14px; background:var(--tint); border-radius:12px; font-size:14px"><strong>Recommendation.</strong> {{c.reason}}</p>
+<div style="display:flex; flex-direction:column; gap:10px">
+<h3 style="margin:0; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)">Extracted</h3>
+<sc-for list="{{c.extracted}}" as="a" hint-placeholder-count="3">
+<div><div style="font-size:12px; color:var(--muted)">{{a.label}}</div><div style="font-weight:600; font-size:14px">{{a.value}}</div></div>
+</sc-for>
+<div style="display:flex; flex-wrap:wrap; gap:6px">
+<sc-for list="{{c.skills}}" as="s" hint-placeholder-count="4">
+<span style="padding:3px 10px; border-radius:999px; background:var(--tint); color:var(--accent); font-size:13px; font-weight:600">{{s}}</span>
+</sc-for>
+</div>
+</div>
+<div style="display:flex; flex-direction:column; gap:10px">
+<h3 style="margin:0; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)">Calculated</h3>
+<div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px 16px">
+<sc-for list="{{c.calc}}" as="a" hint-placeholder-count="6">
+<div><div style="font-size:12px; color:var(--muted)">{{a.label}}</div><div style="font-weight:600; font-size:14px">{{a.value}}</div></div>
+</sc-for>
+</div>
+</div>
+</div>
+</details>
+</sc-for>
+</div>
+
+</main>
+</div>
+
+<footer style="padding:16px 16px 24px; font-size:12px; color:var(--muted); border-top:1px solid var(--line); background:#fff">Data: TalentCLEF 2026 Task A, English development set (synthetic records), CC BY 4.0.</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#4338FF","options":["#4338FF","#0A8F6A","#E0457B"]},"$preview":{"width":390,"height":2600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#4338FF';
+    const calcLabels = ['Total employment', 'Jobs held', 'Average per job', 'Employment gaps', 'Employed now', 'Since graduation'];
+    const pair = (label, value) => ({ label, value });
+
+    // [name, file, score, interview, reason, title, location, degree, skills, calc[6]]
+    const rows = [
+      ['Maya Okafor', '11695', 0.84, true, 'Four years of hospital and clinic reporting with SQL pipelines and dashboards matches the role closely.', 'Senior Data Analyst', 'Leeds, United Kingdom', 'BSc Statistics', ['SQL', 'Python', 'Tableau', 'Excel'], ['106 months', '3', '35.3 months', 'None (0 months)', 'Yes', '102 months']],
+      ['Priya Natarajan', '15087', 0.81, true, 'Clinical analytics background and strong SQL. Shorter time in health than the top match.', 'Clinical Data Analyst', 'Bristol, United Kingdom', 'MSc Health Informatics', ['SQL', 'R', 'Power BI'], ['92 months', '2', '46.0 months', 'None (0 months)', 'Yes', '74 months']],
+      ['Daniel Reyes', '17635', 0.79, true, 'Public-health analysis with Python and dashboards. Limited exposure to clinical systems.', 'Public Health Analyst', 'Manchester, United Kingdom', 'MPH Public Health', ['Python', 'SQL', 'Qlik'], ['96 months', '2', '48.0 months', 'None (0 months)', 'Yes', '60 months']],
+      ['Tom Brandt', '22710', 0.76, true, 'Hospital finance reporting with a health focus. Worth a short screening call.', 'Reporting Analyst', 'Leeds, United Kingdom', 'BA Economics', ['Excel', 'SQL'], ['92 months', '1', '92.0 months', 'None (0 months)', 'Yes', '96 months']],
+      ['Lena Fischer', '10004', 0.58, false, 'Strong analyst, but the experience is in logistics, not health data.', 'Supply Chain Analyst', 'Hamburg, Germany', 'BSc Business Informatics', ['SQL', 'SAP'], ['102 months', '3', '34.0 months', 'None (0 months)', 'Yes', '108 months']],
+      ['Samir Haddad', '13882', 0.52, false, 'Mechanical engineering profile. Little overlap with the role.', 'Mechanical Engineer', 'Dubai, United Arab Emirates', 'BEng Mechanical Engineering', ['HVAC', 'AutoCAD'], ['150 months', '2', '75.0 months', 'None (0 months)', 'Yes', '132 months']],
+      ['Chloe Martin', '15639', 0.49, false, 'Mortgage operations experience; no data analysis focus.', 'Loan Closer', 'Austin, United States', 'BBA Finance', ['Mortgage closing', 'Compliance'], ['77 months', '1', '77.0 months', 'None (0 months)', 'Yes', '84 months']],
+      ['Owen Walsh', '367', 0.47, false, 'Retail banking background. Not matched on skills or domain.', 'Branch Officer', 'Dublin, Ireland', 'BA Business', ['Customer service', 'Lending'], ['85 months', '1', '85.0 months', 'None (0 months)', 'Yes', '90 months']],
+      ['Ana Souza', '8553', 0.44, false, 'HVAC project work; no analysis experience listed.', 'HVAC Project Engineer', 'Lisbon, Portugal', 'MEng Mechanical Engineering', ['HVAC', 'Design'], ['103 months', '1', '103.0 months', 'None (0 months)', 'Yes', '110 months']],
+      ['Jin Park', '8568', 0.41, false, 'Closing and compliance specialist. Different field.', 'Mortgage Closer', 'Seattle, United States', 'BA Accounting', ['Closing', 'Compliance'], ['58 months', '1', '58.0 months', 'None (0 months)', 'Yes', '48 months']]
+    ];
+
+    const cards = rows.map((r, i) => {
+      const [name, file, score, yes, reason, title, loc, degree, skills, calc] = r;
+      return {
+        open: i === 0,
+        rank: String(i + 1),
+        rankStyle: 'flex:none; width:36px; height:36px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:800; ' + (i === 0 ? 'background:var(--accent); color:#fff' : 'background:var(--tint); color:var(--accent)'),
+        name, file,
+        score: score.toFixed(2),
+        barStyle: 'display:block; height:100%; border-radius:4px; background:var(--accent); width:' + Math.round(score * 100) + '%',
+        yes, no: !yes,
+        verdict: yes ? 'Interview' : 'Do not interview',
+        verdictStyle: 'display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; font-size:13px; font-weight:700; white-space:nowrap; ' + (yes ? 'background:#D8F7EA; color:#07553D' : 'background:#FFE4DE; color:#9B2A1B'),
+        reason,
+        skills,
+        extracted: [pair('Current title', title), pair('Location', loc), pair('Highest degree', degree)],
+        calc: calc.map((v, k) => pair(calcLabels[k], v))
+      };
+    });
+
+    return { accent, cards };
+  }
+}
+</script>
+</body>
+</html>

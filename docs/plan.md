@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M1** Settings | `src/config.py` reads `config/.env`, has no defaults and fails clearly; the API key stays hidden (NFR-002); `.env.example` lists every key. | sonnet | medium | open |
 | **M2** Records, ports and file reader | `src/records.py`, `src/ports.py` and `src/file_reader.py`: read the CV and job-description folders and the prompt files (EXT-001, JOB-001). | sonnet | medium | open |
 | **M3** Vector store and ranking | `src/vector_store.py` (installs `chromadb`) and `src/ranking.py` rank by similarity and keep items without a vector (RNK-001, MIS-002). | sonnet | high | open |
 | **M4** LLM client | `src/llm_client.py` (installs `openai`, `pydantic`, `pytest-asyncio`): structured completion and embedding; SDK failures become `LlmError`; the key never leaks (ERR-001, NFR-001, NFR-002). | opus | high | open |
@@ -27,14 +26,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M16** Lock file and CI | `scripts/lock.py`, `constraints.txt`, a lock check in `scripts/check.py`, and `.github/workflows/check.yml` (DEC-018). | sonnet | high | open |
 
 ## Milestones
-
-### M1 — Settings
-
-- **Refs:** NFR-002, DEC-003, DEC-013, design section 2.3.
-- **Owner:** `src/config.py`.
-- **Tests first:** `test_nfr_002_api_key_hidden_from_repr_and_str`, `test_missing_setting_fails_clearly_naming_the_key`, `test_invalid_value_fails_clearly_naming_the_key`, `test_environment_variable_overrides_env_file`, `test_dec_013_server_host_comes_from_the_setting`.
-- **Build:** `config.py` reads `config/.env` (python-dotenv, already listed) and the environment, and returns frozen typed settings objects per component (LLM, folders and prompts, evaluation, server, logging) covering every key in section 2.3. No defaults in code. Add every key to `config/.env.example` with its default (the API key empty) and create the local `config/.env` (never committed).
-- **Gate:** the tests and the checks in `CLAUDE.md` pass; `config/.env` is not staged.
 
 ### M2 — Records, ports and file reader
 
